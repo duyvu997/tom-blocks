@@ -16,7 +16,6 @@ import {
   mintOneToken,
 } from './candy-machine';
 import { AlertState } from './utils';
-import { Header } from './Header';
 import { MintButton } from './MintButton';
 import { GatewayProvider } from '@civic/solana-gateway-react';
 
@@ -162,16 +161,16 @@ const Home = (props: HomeProps) => {
   ]);
 
   return (
-    <Container style={{ marginTop: 100, marginBottom: 100 }}>
+    <Container>
       <Container maxWidth="xs" style={{ position: 'relative' }}>
         <Paper
-          style={{ padding: 24, backgroundColor: '#151A1F', borderRadius: 6 }}
+          style={{ backgroundColor: '#151A1F', borderRadius: 6 }}
         >
           {!wallet.connected ? (
             <ConnectButton>Connect Wallet</ConnectButton>
           ) : (
             <>
-              <Header candyMachine={candyMachine} />
+              {/* <Header candyMachine={candyMachine} /> */}
               <MintContainer>
                 {candyMachine?.state.isActive &&
                 candyMachine?.state.gatekeeper &&

@@ -6,7 +6,7 @@ const headerStyle = {
   fontWeight: '200',
   display: 'flex',
   justifyContent: 'center',
-  marginTop: '100px',
+  marginTop: '50px',
 };
 
 const Header = () => {
