@@ -21,9 +21,10 @@ import { WalletDialogProvider } from '@solana/wallet-adapter-material-ui';
 
 const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
+    console.log(process.env.REACT_APP_CANDY_MACHINE_ID, 1212)
     const candyMachineId = new anchor.web3.PublicKey(
       process.env.REACT_APP_CANDY_MACHINE_ID!
-    );
+    ) || {}
 
     return candyMachineId;
   } catch (e) {

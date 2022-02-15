@@ -31,18 +31,6 @@ const ConnectButton = styled(WalletDialogButton)`
   font-weight: bold;
 `;
 
-const PageHeader = styled(Paper)`
-  padding: 24px;
-  display: flex;
-  justify-content: center;
-  font-size: 35px;
-  font-weight: 500;
-  background: #151a1f;
-  margin-top: 10px;
-  margin-bottom: 50px;
-  border-radius: 6px;
-`;
-
 const MintContainer = styled.div``; // add your owns styles here
 
 export interface HomeProps {
@@ -176,8 +164,6 @@ const Home = (props: HomeProps) => {
   return (
     <Container style={{ marginTop: 100, marginBottom: 100 }}>
       <Container maxWidth="xs" style={{ position: 'relative' }}>
-        <PageHeader>TOM BLOCKS</PageHeader>
-
         <Paper
           style={{ padding: 24, backgroundColor: '#151A1F', borderRadius: 6 }}
         >
