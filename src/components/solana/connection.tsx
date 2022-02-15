@@ -21,16 +21,16 @@ interface BlockhashAndFeeCalculator {
 
 export const getErrorForTransaction = async (
   connection: Connection,
-  txid: string,
+  transactionId: string,
 ) => {
-  // wait for all confirmation before geting transaction
-  await connection.confirmTransaction(txid, 'max');
+  // wait for all confirmation before getting transaction
+  await connection.confirmTransaction(transactionId, 'max');
 
-  const tx = await connection.getParsedConfirmedTransaction(txid);
+  const transaction = await connection.getParsedTransaction(transactionId);
 
   const errors: string[] = [];
-  if (tx?.meta && tx.meta.logMessages) {
-    tx.meta.logMessages.forEach(log => {
+  if (transaction?.meta && transaction.meta.logMessages) {
+    transaction.meta.logMessages.forEach(log => {
       const regex = /Error: (.*)/gm;
       let m;
       while ((m = regex.exec(log)) !== null) {

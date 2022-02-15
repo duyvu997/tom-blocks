@@ -12,11 +12,11 @@ import Collections from '../pages/Collections';
 const Layout = () => {
   return (
     <div>
-      <Header></Header>
+      <Header/>
       <Router>
-        <Navbar></Navbar>
+        <Navbar/>
         <Routes>
-          <Route path="/home" element={<Mint />} />
+          <Route path="/" element={<Mint />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/about" element={<About />} />
         </Routes>

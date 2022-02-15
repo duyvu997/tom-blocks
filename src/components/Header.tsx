@@ -1,5 +1,3 @@
-import React from 'react';
-
 const headerStyle = {
   padding: '20px',
   fontSize: '50px',

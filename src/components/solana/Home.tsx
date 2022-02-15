@@ -76,18 +76,48 @@ const Home = (props: HomeProps) => {
 
     if (props.candyMachineId) {
       try {
-        const cndy = await getCandyMachineState(
+        const candy = await getCandyMachineState(
           anchorWallet,
           props.candyMachineId,
-          props.connection,
+          props.connection
         );
-        setCandyMachine(cndy);
+        setCandyMachine(candy);
       } catch (e) {
         console.log('There was a problem fetching Candy Machine state');
         console.log(e);
       }
     }
   }, [anchorWallet, props.candyMachineId, props.connection]);
+
+  const handleMintError = async (error: any) => {
+    let message = 'Minting failed! Please try again!';
+
+    if (error.msg && error.code === 311) {
+      message = `SOLD OUT!`;
+      window.location.reload();
+    }
+    if (error.msg && error.code === 312) {
+      message = `Minting period hasn't started yet.`;
+    }
+
+    if (!error.message) {
+      message = 'Transaction Timeout! Please try again.';
+    }
+
+    if (error.message.indexOf('0x137')) {
+      message = `SOLD OUT!`;
+    }
+
+    if (error.message.indexOf('0x135')) {
+      message = `Insufficient funds to mint. Please fund your wallet.`;
+    }
+
+    setAlertState({
+      open: true,
+      message,
+      severity: 'error',
+    });
+  };
 
   const onMint = async () => {
     try {
@@ -104,48 +134,24 @@ const Home = (props: HomeProps) => {
             mintTxId,
             props.txTimeout,
             props.connection,
-            true,
+            true
           );
         }
 
-        if (status && !status.err) {
-          setAlertState({
-            open: true,
-            message: 'Congratulations! Mint succeeded!',
-            severity: 'success',
-          });
-        } else {
-          setAlertState({
-            open: true,
-            message: 'Mint failed! Please try again!',
-            severity: 'error',
-          });
-        }
+        status && !status.err
+          ? setAlertState({
+              open: true,
+              message: 'Congratulations! Mint succeeded!',
+              severity: 'success',
+            })
+          : setAlertState({
+              open: true,
+              message: 'Mint failed! Please try again!',
+              severity: 'error',
+            });
       }
     } catch (error: any) {
-      let message = error.msg || 'Minting failed! Please try again!';
-      if (!error.msg) {
-        if (!error.message) {
-          message = 'Transaction Timeout! Please try again.';
-        } else if (error.message.indexOf('0x137')) {
-          message = `SOLD OUT!`;
-        } else if (error.message.indexOf('0x135')) {
-          message = `Insufficient funds to mint. Please fund your wallet.`;
-        }
-      } else {
-        if (error.code === 311) {
-          message = `SOLD OUT!`;
-          window.location.reload();
-        } else if (error.code === 312) {
-          message = `Minting period hasn't started yet.`;
-        }
-      }
-
-      setAlertState({
-        open: true,
-        message,
-        severity: 'error',
-      });
+      handleMintError(error);
     } finally {
       setIsUserMinting(false);
     }
@@ -163,14 +169,11 @@ const Home = (props: HomeProps) => {
   return (
     <Container>
       <Container maxWidth="xs" style={{ position: 'relative' }}>
-        <Paper
-          style={{ backgroundColor: '#151A1F', borderRadius: 6 }}
-        >
+        <Paper style={{ backgroundColor: '#151A1F', borderRadius: 6 }}>
           {!wallet.connected ? (
             <ConnectButton>Connect Wallet</ConnectButton>
           ) : (
             <>
-              {/* <Header candyMachine={candyMachine} /> */}
               <MintContainer>
                 {candyMachine?.state.isActive &&
                 candyMachine?.state.gatekeeper &&
@@ -204,6 +207,7 @@ const Home = (props: HomeProps) => {
                   />
                 )}
               </MintContainer>
+              {/* <Header candyMachine={candyMachine} /> */}
             </>
           )}
         </Paper>

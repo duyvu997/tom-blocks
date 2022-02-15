@@ -9,7 +9,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100" style={navbarStyle}>
       <ul className="menu menu-horizontal p-0">
         <li>
-          <Link to="/home">MINT</Link>
+          <Link to="/">MINT</Link>
         </li>
         <li>
           <Link to="/collections">COLLECTIONS</Link>
