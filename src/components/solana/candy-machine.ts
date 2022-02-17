@@ -13,11 +13,11 @@ import {
 } from './utils';
 
 export const CANDY_MACHINE_PROGRAM = new anchor.web3.PublicKey(
-  process.env.REACT_APP_CANDY_MACHINE_PROGRAM || ''
+  'cndy3Z4yapfJBmL3ShUp5exZKqR3z33thTzeNMm2gRZ'
 );
 
 const TOKEN_METADATA_PROGRAM_ID = new anchor.web3.PublicKey(
-  process.env.TOKEN_METADATA_PROGRAM_ID || ''
+  'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'
 );
 
 interface CandyMachineState {
@@ -143,7 +143,7 @@ const createAssociatedTokenAccountInstruction = (
       isWritable: false,
     },
   ];
-  
+
   return new anchor.web3.TransactionInstruction({
     keys,
     programId: SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
@@ -465,6 +465,19 @@ export const mintOneToken = async (
 
 export const shortenAddress = (address: string, chars = 4): string => {
   return `${address.slice(0, chars)}...${address.slice(-chars)}`;
+};
+
+export const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
+  try {
+    const candyMachineId = new anchor.web3.PublicKey(
+      process.env.REACT_APP_CANDY_MACHINE_ID!
+    ) || {}
+
+    return candyMachineId;
+  } catch (e) {
+    console.log('Failed to construct CandyMachineId', e);
+    return undefined;
+  }
 };
 
 const sleep = (ms: number): Promise<void> => {
