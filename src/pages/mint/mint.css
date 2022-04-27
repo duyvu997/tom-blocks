@@ -52,10 +52,17 @@
 /* ------------------------------------------------------------------------------------------ */
 /* Media Content */
 
-.media-content {
+.media-content-wrapper {
   border-bottom: 0.5px solid gray;
   min-height: 350px;
   width: 100%;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.media-content {
+  border-radius: 10px;
 }
 
 /* ------------------------------------------------------------------------------------------ */

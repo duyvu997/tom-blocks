@@ -1,5 +1,4 @@
 import './mint.css';
-import React, { useState } from 'react';
 import NFTMint from '../../components/solana/NFTMint';
 import { useWallet } from '@solana/wallet-adapter-react';
 
@@ -13,7 +12,8 @@ const Mint = ({
   rpcHost,
 }: any) => {
   const wallet = useWallet();
-  const isConnected = useState(wallet.connected)
+  
+
   return (
     <div className="mint-container">
       <div className="status">
@@ -25,7 +25,9 @@ const Mint = ({
         </div>
         <div className="wallet-balance"> 10.0 SOL</div>
       </div>
-      <div className="media-content"></div>
+      <div className="media-content-wrapper">
+        <img className="media-content" src="sele.gif" alt="" />
+      </div>
       <div className="description">
         <h3>Gen 0</h3>
         <p>
