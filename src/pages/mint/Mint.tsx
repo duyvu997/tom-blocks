@@ -1,29 +1,49 @@
 import './mint.css';
 import NFTMint from '../../components/solana/NFTMint';
 import { useWallet } from '@solana/wallet-adapter-react';
+import {
+  getBalance,
+  shortenAddress,
+} from '../../components/solana/candy-machine';
+import { useEffect, useState } from 'react';
 
 const Mint = ({
-  endpoint,
-  wallets,
   candyMachineId,
   connection,
   startDateSeed,
   txTimeoutInMilliseconds,
   rpcHost,
 }: any) => {
-  const wallet = useWallet();
-  
+  const [balance, setBalance] = useState(0);
+  const wallet = useWallet() as any;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (wallet.publicKey?.toString() && connection) {
+        const balance = await getBalance(wallet, connection);
+        setBalance(balance / 10 ** 9);
+      }
+    };
+
+    fetchData().catch(console.error);
+  }, [connection, wallet]);
 
   return (
     <div className="mint-container">
       <div className="status">
         <div className="status-text">
-          <div className={wallet.connected ? 'connected' : 'disconnected'}></div>
+          <div
+            className={wallet.connected ? 'connected' : 'disconnected'}
+          ></div>
           <span className="wallet-address">
-            {wallet.connected ? wallet.publicKey : 'Not Connected'}
+            {wallet.connected
+              ? shortenAddress(wallet.publicKey?.toString() || '')
+              : 'Not Connected'}
           </span>
         </div>
-        <div className="wallet-balance"> 10.0 SOL</div>
+        <div className="wallet-balance">
+          {process.env.REACT_APP_SOLANA_NETWORK} {balance} SOL
+        </div>
       </div>
       <div className="media-content-wrapper">
         <img className="media-content" src="sele.gif" alt="" />
@@ -39,8 +59,6 @@ const Mint = ({
       </div>
       <div className="mint-btn">
         <NFTMint
-          endpoint={endpoint}
-          wallets={wallets}
           candyMachineId={candyMachineId}
           connection={connection}
           startDate={startDateSeed}
@@ -53,4 +71,3 @@ const Mint = ({
 };
 
 export default Mint;
-

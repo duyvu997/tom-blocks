@@ -469,9 +469,8 @@ export const shortenAddress = (address: string, chars = 4): string => {
 
 export const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
   try {
-    const candyMachineId = new anchor.web3.PublicKey(
-      process.env.REACT_APP_CANDY_MACHINE_ID!
-    ) || {}
+    const candyMachineId =
+      new anchor.web3.PublicKey(process.env.REACT_APP_CANDY_MACHINE_ID!) || {};
 
     return candyMachineId;
   } catch (e) {
@@ -482,4 +481,11 @@ export const getCandyMachineId = (): anchor.web3.PublicKey | undefined => {
 
 const sleep = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
+export const getBalance = async (
+  wallet: anchor.Wallet,
+  connection: anchor.web3.Connection
+) => {
+  return connection.getBalance(wallet.publicKey);
 };
