@@ -4,7 +4,6 @@
   margin: 3rem auto;
   border-radius: 6px;
   border-width: 0.2px;
-  padding: 10px;
   display: flex;
   border-color: transparent;
   flex-direction: column;
@@ -14,13 +13,14 @@
 .collection-name {
   margin: 0rem auto 3rem auto;
   font-size: 25px;
-  text-weight: bold
+  text-weight: bold;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: auto auto auto;
   row-gap: 1rem;
+  column-gap: 1rem;
   width: 60%;
 }
 
@@ -28,12 +28,10 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center   
+  align-items: center;
 }
 
 .item-name {
   margin: 1rem;
-  text-weight: bold
+  text-weight: bold;
 }
-
-
