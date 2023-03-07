@@ -1,0 +1,6 @@
+{
+    "rewrites": [
+      {"source": "/admin/", "destination": "https://image-gallery-duyvu997.vercel.app/"},
+      {"source": "/", "destination": "https://giaphatcompany.com/"}
+    ]
+  }
